@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [color, setColor] = useState('#123456');
+
+	const changeColor = async () => {
+		const res = await fetch('http://api.noopschallenge.com/hexbot');
+		const json = await res.json();
+		console.log(json)
+		setColor(json.colors[0].value);
+	}
+
+	return (
+		<div className="App">
+			<div style={{ backgroundColor: color }} className="theDiv"/>
+			<button onClick={changeColor}>Change color!!</button>
+		</div>
+	);
 }
 
 export default App;
